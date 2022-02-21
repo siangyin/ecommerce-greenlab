@@ -3,7 +3,7 @@ import { Navbar, NavDropdown, Nav, Container } from "react-bootstrap";
 
 const Header = () => {
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+		<Navbar collapseOnSelect expand="md" bg="primary" variant="dark">
 			<Container>
 				<Navbar.Brand href="/">
 					<img
@@ -33,8 +33,14 @@ const Header = () => {
 					<Nav>
 						<Nav.Link href="/login">Login</Nav.Link>
 						<Nav.Link href="/signup">Sign up</Nav.Link>
-						<Nav.Link href="/account">My Account</Nav.Link>
-						<Nav.Link href="/admin">Admin Only</Nav.Link>
+						<Nav.Link href="/account">Account</Nav.Link>
+						<Nav.Link href="/logout">Logout</Nav.Link>
+						<Nav.Link href="/cart">
+							<i className="fas fa-shopping-cart"></i> Cart
+						</Nav.Link>
+						<Nav.Link href="/admin">
+							<i className="fa-solid fa-user-lock"></i> Admin
+						</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
