@@ -1,8 +1,8 @@
 import ProductListPage from "./ProductListPage";
 import ProductPage from "./ProductPage";
-import LoginPage from "./LoginPage";
-import SignupPage from "./SignupPage";
-import UserPage from "./UserPage";
+import UserLoginPage from "./UserLoginPage";
+import UserSignUpPage from "./UserSignUpPage";
+import UserAccountPage from "./UserAccountPage";
 import CartPage from "./CartPage";
 import AdminPage from "./AdminPage";
 import ProductSetupPage from "./ProductSetupPage";
@@ -13,9 +13,9 @@ import Error404Page from "./Error404Page";
 export {
 	ProductListPage,
 	ProductPage,
-	LoginPage,
-	SignupPage,
-	UserPage,
+	UserLoginPage,
+	UserSignUpPage,
+	UserAccountPage,
 	CartPage,
 	AdminPage,
 	ProductSetupPage,

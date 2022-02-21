@@ -1,34 +1,23 @@
 import { useState, useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col } from "react-bootstrap";
+
 import axios from "axios";
 
 const ProductListPage = () => {
 	const [productDB, setProductDB] = useState();
 
+	const url = `http://localhost:5050/api/v1/products`;
+
+	const getAllProductsAPI = async () => {
+		try {
+			const response = await fetch(url);
+			const data = await response.json();
+			setProductDB(data.products);
+		} catch (error) {
+			console.log("error>>>", error);
+		}
+	};
+
 	useEffect(() => {
-		const getAllProductsAPI = async () => {
-			try {
-				const res = await axios(
-					"https://greenlab-be.herokuapp.com/api/v1/products",
-					{
-						method: "GET",
-						mode: "no-cors",
-						headers: {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json",
-						},
-						withCredentials: true,
-						credentials: "same-origin",
-					}
-				);
-				console.error(res.data.products);
-				setProductDB(res.data.products);
-				return res;
-			} catch (err) {
-				console.error(err);
-			}
-		};
 		getAllProductsAPI();
 	}, [productDB]);
 
@@ -38,7 +27,7 @@ const ProductListPage = () => {
 			<div>
 				{productDB &&
 					productDB.map((item) => {
-						return <h6>{item.name}</h6>;
+						return <h6 key={item._id}>{item.name}</h6>;
 					})}
 			</div>
 		</div>

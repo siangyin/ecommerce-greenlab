@@ -1,8 +1,9 @@
 import React from "react";
-
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import error404img from "../assets/error404.jpg";
 
-const Error404Page = () => {
+const Error404Page = ({ msg }) => {
 	return (
 		<div className="text-center">
 			<img
@@ -11,10 +12,13 @@ const Error404Page = () => {
 				className="mx-auto d-block"
 				height="300px"
 			/>
-			<h2>Ooops... sorry, there was an error!</h2>
-			<button type="button" class="btn btn-primary">
-				return to homepage
-			</button>
+			<h2>{msg ? msg : "Ooops... sorry, page not found!"} </h2>
+
+			<Link to="/">
+				<Button className="btn-md" variant="primary">
+					return to homepage
+				</Button>
+			</Link>
 		</div>
 	);
 };

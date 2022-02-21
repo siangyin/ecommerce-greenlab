@@ -5,9 +5,9 @@ import { Header, Footer } from "./components";
 import {
 	ProductListPage,
 	ProductPage,
-	LoginPage,
-	SignupPage,
-	UserPage,
+	UserLoginPage,
+	UserSignUpPage,
+	UserAccountPage,
 	CartPage,
 	AdminPage,
 	ProductSetupPage,
@@ -25,9 +25,9 @@ const App = () => {
 					{/* // current homepage = all products page */}
 					<Routes>
 						<Route exact path="/" element={<ProductListPage />} />
-						<Route exact path="/login" element={<LoginPage />} />
-						<Route exact path="/signup" element={<SignupPage />} />
-						<Route exact path="/useraccount" element={<UserPage />} />
+						<Route exact path="/login" element={<UserLoginPage />} />
+						<Route exact path="/signup" element={<UserSignUpPage />} />
+						<Route exact path="/useraccount" element={<UserAccountPage />} />
 						<Route exact path="/cart" element={<CartPage />} />
 						<Route exact path="/admin" element={<AdminPage />} />
 						<Route exact path="/products" element={<ProductListPage />} />

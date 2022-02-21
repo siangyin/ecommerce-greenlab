@@ -33,7 +33,7 @@ const Header = () => {
 					<Nav>
 						<Nav.Link href="/login">Login</Nav.Link>
 						<Nav.Link href="/signup">Sign up</Nav.Link>
-						<Nav.Link href="/account">Account</Nav.Link>
+						<Nav.Link href="/useraccount">Account</Nav.Link>
 						<Nav.Link href="/logout">Logout</Nav.Link>
 						<Nav.Link href="/cart">
 							<i className="fas fa-shopping-cart"></i> Cart
