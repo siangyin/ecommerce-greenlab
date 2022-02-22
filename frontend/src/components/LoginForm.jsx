@@ -44,7 +44,7 @@ const LoginForm = ({ title }) => {
 		e.preventDefault();
 		console.log(userInputDb);
 		try {
-			const responseLogin = await fetch(`${BE_URL}/api/v1/auth/login`, {
+			const responseLogin = await fetch(`${BE_URL}/auth/login`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -96,7 +96,7 @@ const LoginForm = ({ title }) => {
 		e.preventDefault();
 		console.log(userInputDb);
 		try {
-			const responseLogin = await fetch(`${BE_URL}/api/v1/auth/register`, {
+			const responseLogin = await fetch(`${BE_URL}/auth/register`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

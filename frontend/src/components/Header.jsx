@@ -12,7 +12,7 @@ const Header = () => {
 
 	const handleLogOut = async () => {
 		try {
-			const responseLogout = await fetch(`${BE_URL}/api/v1/auth/logout`, {
+			const responseLogout = await fetch(`${BE_URL}/auth/logout`, {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",

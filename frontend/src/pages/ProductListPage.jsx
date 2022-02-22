@@ -34,6 +34,8 @@ const ProductListPage = () => {
 								name={item.name}
 								price={item.price}
 								image={item.image}
+								id={item._id}
+								url={`/product/${item._id}`}
 							/>
 						);
 					})}
