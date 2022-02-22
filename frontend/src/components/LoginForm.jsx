@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
-
-import { FormRow, AlertBox } from "./index";
+import { useReducer, useContext, useState, useEffect } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { LoginContext, adminContext, userIDContext } from "../helper/context";
+import { FormRow } from "./index";
+import { BE_URL } from "../helper/const";
 
 const LoginForm = ({ title }) => {
+	let navigate = useNavigate();
+
 	const usePathname = () => {
 		const location = useLocation();
 		return location.pathname;
@@ -16,9 +19,15 @@ const LoginForm = ({ title }) => {
 		password: "",
 	});
 
-	const [errorMsg, setErrorMsg] = useState(false);
-
-	// functions
+	const [errorMsg, setErrorMsg] = useState({
+		title: "",
+		type: "",
+		msg: "",
+		status: false,
+	});
+	const { loggedIn, setLoggedIn } = useContext(LoginContext);
+	const { admin, setAdmin } = useContext(adminContext);
+	const { userID, setUserID } = useContext(userIDContext);
 
 	function handleChange(e) {
 		const name = e.target.name;
@@ -30,28 +39,121 @@ const LoginForm = ({ title }) => {
 		}));
 	}
 
-	function handleRegister(e) {
+	// functions
+	const handleLogin = async (e) => {
 		e.preventDefault();
-			console.log(userInputDb);
-		if (!userInputDb.name || !userInputDb.email || !userInputDb.password) {
-			setErrorMsg(true);
+		console.log(userInputDb);
+		try {
+			const responseLogin = await fetch(`${BE_URL}/api/v1/auth/login`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(userInputDb),
+			});
+			const loginDetails = await responseLogin.json();
+
+			if (loginDetails.status === "OK") {
+				console.log(loginDetails);
+				setLoggedIn(true);
+				setUserID(loginDetails.user.userID);
+				if (loginDetails.role === "admin") {
+					setAdmin(true);
+				} else {
+					setAdmin(false);
+				}
+				localStorage.setItem("userID", loginDetails.user.userID);
+				setErrorMsg((prevState) => ({
+					...prevState,
+					status: false,
+				}));
+				navigate("/useraccount");
+			}
+
+			if (loginDetails.status !== "OK") {
+				setErrorMsg({
+					title: "invalid credential",
+					type: "red",
+					msg: "incorrect email or password",
+					status: true,
+				});
+
+				setUserInputDb({
+					name: "",
+					email: "",
+					password: "",
+				});
+
+				console.log(errorMsg);
+			}
+		} catch (error) {
+			console.log(error);
 		}
-	}
+	};
+
+	// functions
+	const handleRegister = async (e) => {
+		e.preventDefault();
+		console.log(userInputDb);
+		try {
+			const responseLogin = await fetch(`${BE_URL}/api/v1/auth/register`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(userInputDb),
+			});
+			const loginDetails = await responseLogin.json();
+			console.log(loginDetails);
+			if (loginDetails.status === "OK") {
+				console.log(loginDetails);
+				setLoggedIn(true);
+				setUserID(loginDetails.user.userID);
+				if (loginDetails.role === "admin") {
+					setAdmin(true);
+				} else {
+					setAdmin(false);
+				}
+				localStorage.setItem("userID", loginDetails.user.userID);
+				setErrorMsg((prevState) => ({
+					...prevState,
+					status: false,
+				}));
+				navigate("/useraccount");
+			}
+
+			if (loginDetails.status !== "OK") {
+				setErrorMsg({
+					title: "invalid credential",
+					type: "red",
+					msg: "incorrect email or password",
+					status: true,
+				});
+
+				setUserInputDb({
+					name: "",
+					email: "",
+					password: "",
+				});
+
+				console.log(errorMsg);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<form>
 			<fieldset>
-				{errorMsg && (
-					<AlertBox
-						type="red"
-						msg="please input all field"
-						title="Incomplete information"
-					/>
+				{errorMsg.status && (
+					<small className="text-secondary">{errorMsg.msg}</small>
 				)}
+
 				{pathId === "/signup" && (
 					<FormRow
 						type="text"
-						name="username"
+						name="name"
 						value={userInputDb.name}
 						handleChange={handleChange}
 						labelText="username"
@@ -85,7 +187,7 @@ const LoginForm = ({ title }) => {
 			<button
 				className="btn btn-primary mt-4"
 				type="button"
-				onClick={handleRegister}
+				onClick={pathId === "/login" ? handleLogin : handleRegister}
 			>
 				{title}
 			</button>

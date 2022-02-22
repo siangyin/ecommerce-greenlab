@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AlertBox = ({ type, title, msg }) => {
-	const [alertStyle, setAlertStyle] = useState(
-		"alert alert-dismissible alert-light"
-	);
+	// const [show, setShow] = useState(true);
 
-	if (type === "red") {
-		setAlertStyle = "alert alert-dismissible alert-secondary";
-	}
+	// useEffect(() => {
+	// 	setShow(true);
+	// }, [show]);
+
 	return (
-		<div className={alertStyle}>
+		<div className="alert alert-dismissible alert-secondary">
 			<button
 				type="button"
 				className="btn-close"
 				data-bs-dismiss="alert"
+				aria-label="close"
 			></button>
+
 			<strong>{title}</strong>
 			<p>{msg}</p>
 		</div>

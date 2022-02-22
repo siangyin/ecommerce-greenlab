@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
-
-import axios from "axios";
-import { BE_URL } from "../helper/constant";
+import { LoadingSpinner, ProductCard } from "../components";
+import { BE_URL } from "../helper/const";
 
 const ProductListPage = () => {
 	const [productDB, setProductDB] = useState();
 
-	const url = BE_URL
+	const url = `${BE_URL}/products`;
 
 	const getAllProductsAPI = async () => {
 		try {
 			const response = await fetch(url);
 			const data = await response.json();
-			setProductDB(data.products);
+			setProductDB(data.data);
+			console.log(data.data);
 		} catch (error) {
-			console.log("error>>>", error);
+			console.log(error);
 		}
 	};
 
 	useEffect(() => {
 		getAllProductsAPI();
-	}, [productDB]);
+	}, []);
 
 	return (
 		<div>
@@ -28,13 +28,18 @@ const ProductListPage = () => {
 			<div>
 				{productDB &&
 					productDB.map((item) => {
-						return <h6 key={item._id}>{item.name}</h6>;
+						return (
+							<ProductCard
+								key={item._id}
+								name={item.name}
+								price={item.price}
+								image={item.image}
+							/>
+						);
 					})}
 			</div>
 
-
 			{/* divider */}
-
 		</div>
 	);
 };

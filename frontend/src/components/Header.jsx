@@ -1,7 +1,35 @@
-import React from "react";
-import { Navbar, NavDropdown, Nav, Container } from "react-bootstrap";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Navbar, NavDropdown, Nav, Container, NavItem } from "react-bootstrap";
+import { LoginContext, adminContext, userIDContext } from "../helper/context";
+import { BE_URL } from "../helper/const";
 
 const Header = () => {
+	const { loggedIn, setLoggedIn } = useContext(LoginContext);
+	const { admin, setAdmin } = useContext(adminContext);
+	const { userID, setUserID } = useContext(userIDContext);
+	let navigate = useNavigate();
+
+	const handleLogOut = async () => {
+		try {
+			const responseLogout = await fetch(`${BE_URL}/api/v1/auth/logout`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			setLoggedIn(false);
+			setAdmin(false);
+			setUserID(false);
+			localStorage.removeItem("userID");
+			console.log(responseLogout);
+			navigate("/");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Navbar collapseOnSelect expand="md" bg="primary" variant="dark">
 			<Container>
@@ -34,7 +62,11 @@ const Header = () => {
 						<Nav.Link href="/login">Login</Nav.Link>
 						<Nav.Link href="/signup">Sign up</Nav.Link>
 						<Nav.Link href="/useraccount">Account</Nav.Link>
-						<Nav.Link href="/logout">Logout</Nav.Link>
+						<Nav.Link>
+							<span onClick={handleLogOut}>
+								<i className="fa-solid fa-arrow-right-from-bracket"></i> Logout
+							</span>
+						</Nav.Link>
 						<Nav.Link href="/cart">
 							<i className="fas fa-shopping-cart"></i> Cart
 						</Nav.Link>
