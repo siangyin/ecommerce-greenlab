@@ -1,7 +1,6 @@
 import React from "react";
 
 const FormRow = ({ type, name, value, handleChange, labelText }) => {
-
 	return (
 		<div className="form-group row">
 			<label className="form-label mt-4" htmlFor={name}>

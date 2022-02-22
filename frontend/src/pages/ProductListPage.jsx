@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios";
+import { BE_URL } from "../helper/constant";
 
 const ProductListPage = () => {
 	const [productDB, setProductDB] = useState();
 
-	const url = `http://localhost:5050/api/v1/products`;
+	const url = BE_URL
 
 	const getAllProductsAPI = async () => {
 		try {
@@ -30,6 +31,10 @@ const ProductListPage = () => {
 						return <h6 key={item._id}>{item.name}</h6>;
 					})}
 			</div>
+
+
+			{/* divider */}
+
 		</div>
 	);
 };
